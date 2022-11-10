@@ -187,9 +187,9 @@ client.connect(async (err) => {
         }
         else res.send({ message: "BAD, couldn't add ", data })
     });
-
-    app.listen(process.env.PORT || 3000, () => {
-        console.log('listening on port: ' + process.env.PORT || 3000);
+    let PORT = process.env.PORT || 3000
+    app.listen(PORT, () => {
+        console.log('listening on port: ' + PORT);
     });
 
 
