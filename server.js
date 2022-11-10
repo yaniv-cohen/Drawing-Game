@@ -24,7 +24,7 @@ client.connect(async (err) => {
 
 
     app.get('/', function (req, res) {
-        res.sendFile(path.join(__dirname, 'public/index.html'));
+        res.sendFile(path.join(__dirname, 'public/welcome.html'));
     });
     app.get('/words/*', function (req, res) {
         console.log('get words')
