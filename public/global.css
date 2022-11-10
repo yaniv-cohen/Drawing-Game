@@ -1,0 +1,110 @@
+body {
+  background-color: #212121;
+  color: #f6f6f6;
+}
+body canvas {
+  border: 4px solid #f6f6f6;
+}
+body h1 {
+  background-color: #ec93c5;
+  text-align: center;
+}
+
+#chosenWordDiv {
+  width: fit-content;
+  min-width: 200px;
+  height: 50px;
+  background-color: #f6c54a;
+  margin: auto;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+  font-weight: 600;
+  text-shadow: 1px 3px 3px #212121;
+  text-transform: capitalize;
+}
+
+.form__group {
+  position: relative;
+  padding: 15px 0 0;
+  margin-top: 10px;
+  width: 50%;
+}
+
+.form__field {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid #9b9b9b;
+  outline: 0;
+  font-size: 1.3rem;
+  color: #fff;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+.form__field::placeholder {
+  color: transparent;
+}
+.form__field:placeholder-shown ~ .form__label {
+  font-size: 1.3rem;
+  cursor: text;
+  top: 20px;
+}
+
+.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: #9b9b9b;
+}
+
+.form__field:focus {
+  padding-bottom: 6px;
+  font-weight: 700;
+  border-width: 3px;
+  border-image: linear-gradient(to right, #ec93c5, #e85e33);
+  border-image-slice: 1;
+}
+.form__field:focus ~ .form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: #ec93c5;
+  font-weight: 700;
+}
+
+/* reset input */
+.form__field:required, .form__field:invalid {
+  box-shadow: none;
+}
+
+/* demo */
+#buttonsContainer {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  padding-left: 40px;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.5rem;
+}
+
+button {
+  background-color: #ec93c5;
+  display: block;
+  font-size: 24px;
+  color: #212121;
+}
+
+/*# sourceMappingURL=global.css.map */

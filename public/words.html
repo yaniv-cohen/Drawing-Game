@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Words</title>
+    <!-- <script type="text/javascript" src="server_methods/postRequests.js"></script> -->
+
+    <!-- I had a weird bug that would not let me put this code in another file. this works for now ... -->
+    <script defer>
+
+        setup()
+
+        async function setup() {
+            let query = window.location.href.split('?')[1];
+            console.log(query);
+            // query =query.slice(query.indexOf('words')+1)[0]
+            let paramsString = query.split('&')
+            // var qs = parse_query_string(query);
+            let gameId= paramsString[0].split('=')[1]
+            let key = paramsString[1]
+            console.log('setup of words', query,gameId,key);
+            let gameData = await getGameData(gameId,key)
+            console.log(gameData);
+            let wordPool = gameData.wordPool
+            const outputDiv = document.getElementById('outputDiv')
+            document.getElementById('outputDivH1').innerHTML = wordPool
+
+            //  Create buttons
+            let newButtonEasy = document.createElement('button')
+            newButtonEasy.innerText = wordPool[0] + ' (+1)'
+            newButtonEasy.addEventListener('click', () => {
+                console.log('post', [wordPool[0]]);
+                postChosenWord(gameId, [wordPool[0]])
+
+            })
+            outputDiv.appendChild(newButtonEasy)
+
+
+            let newButtonMedium = document.createElement('button')
+            newButtonMedium.innerText = wordPool[1] + ' (+3)'
+            newButtonMedium.addEventListener('click', () => {
+                console.log('post', [wordPool[1]]);
+                postChosenWord(gameId, [wordPool[1]])
+
+            })
+            outputDiv.appendChild(newButtonMedium)
+
+            let newButtonHard = document.createElement('button')
+            newButtonHard.innerText = wordPool[2] + ' (+5)'
+            newButtonHard.addEventListener('click', () => {
+                console.log('post', [wordPool[2]]);
+                postChosenWord(gameId, [wordPool[2]])
+
+            })
+            outputDiv.appendChild(newButtonHard)
+
+        }
+
+        async function getGameData(gameId,key='') {
+            let url = (window.location.origin.replace('guess', 'game') + '') + '/gameId' + gameId+'/'+key
+            console.log('get at url ', url);
+            let gameData = await fetch(url)
+            // console.log(gameData);
+            let temp = await gameData.json()
+            // console.log(temp);
+            return temp
+        }
+        async function postChosenWord(gameId, wordsArr) {
+            let url = window.location.origin + '/updateWord/gameId' + gameId
+            console.log('post to:', url);
+            console.log(wordsArr);
+            postData(url, wordsArr)
+                .then((data) => {
+                    console.log(data); // JSON data parsed by `data.json()` call
+                    let url = window.location.origin + '/welcome'
+                    window.location.href = url;
+                });
+        }
+
+        // POST method implementation:
+        async function postData(url = '', data = {}) {
+            // Default options are marked with *
+            const response = await fetch(url, {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: JSON.stringify(data) // body data type must match "Content-Type" header
+            });
+            return response.json(); // parses JSON response into native JavaScript objects
+        }
+    </script>
+</head>
+
+<body>
+    <div>
+        <h1>Words</h1>
+        <!-- <button onClick="goTo('welcome')">welcome</button> -->
+
+    </div>
+    <div id="outputDiv">
+        <h1 id="outputDivH1">Click on a word to choose it</h1>
+    </div>
+</body>
+
+</html>

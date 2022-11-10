@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <script src="server_methods/postRequests.js" defer></script>
+    <script src="welcome.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="global.css">
+
+    <!-- <script src="words.js" defer></script> -->
+</head>
+
+<body>
+    <div>
+        <p>Create A New Game</p>
+        <label>
+            <label>
+                Create New Game:
+                <input id="newGameIdInput" type="number" placeholder="Game Id:"></input>
+                <input id="usernameInput" type="text" placeholder="User name:"></input>
+                <input id="otherUsernameInput" type="text" placeholder="Opponent name:"></input>
+                <button onClick="clickedCreateGame()">Create New Game</button>
+            </label>
+        </label>
+    </div>
+
+
+    <div id="buttonsContainer">
+        <span>Go to existing game</span>
+        <label>
+            <!-- <input id="myUsernameInput" type="text" placeholder="Username:"></input> -->
+
+            <div class="form__group field">
+                <input type="input" class="form__field" placeholder="Username:" name="myUsernameInput"
+                    id='myUsernameInput' required />
+                <label for="myUsernameInput" class="form__label">Username:</label>
+            </div>
+
+            <div class="form__group field">
+                <input required id="targetGameInput" type="number" class="form__field" placeholder="Game Id:"
+                    name="targetGameInput" />
+                <label for="targetGameInput" class="form__label">Game Id:</label>
+            </div>
+            <!-- <input id="targetGameInput" type="number" placeholder="Game Id:"></input> -->
+
+
+        </label>
+    </div>
+    <button onClick="goTo('game')">Play As Painter</button>
+    <button onClick="goTo('guess')">Play As Guesser</button>
+</body>
+
+</html>

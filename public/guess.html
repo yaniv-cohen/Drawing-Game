@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="server_methods/getRequests.js" defer></script>
+    <script src="server_methods/postRequests.js" defer></script>
+    <script src="utilities/drawFunction.js" defer></script>
+
+    <script src="guess.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="global.css">
+
+    <title>Canvas Game - Guesser</title>
+
+</head>
+
+<body>
+    <canvas id="myCanvas" width="480" height="320"></canvas>
+    <div>
+        <!-- <label>
+            word:
+            <input id="guessInput" type="text" placeholder="Your Guess"></input>
+        </label> -->
+
+        <div class="form__group field">
+            <input required id="guessInput" type="text" class="form__field" placeholder="Your Guess:"
+                name="guessInput" />
+            <label for="guessInput" class="form__label">Your Guess:</label>
+        </div>
+        <button onclick="clickedGuessWord()">Guess Word!</button>
+    </div>
+    <!-- <button onclick="exportClicked()">Export</button> -->
+</body>
+
+</html>

@@ -1,5 +1,11 @@
-var canvas = document.getElementById("myCanvas");
-var ctx = canvas.getContext("2d");
+
+let canvas = document.getElementById("myCanvas");
+let ctx = canvas.getContext("2d");
+
+//global vars for drawing
+let penUp = true
+let drawings = []
+let currentLine = [[], []]
 
 function getMousePosition(canvas, click) {
     let rect = canvas.getBoundingClientRect();
@@ -9,8 +15,13 @@ function getMousePosition(canvas, click) {
     return output
 }
 
-
+const defalutColor = '#bb4400'
+let penshape = 'line'
+let strokeWidth = 5
+let gameId
+let color = defalutColor
 canvas.addEventListener('mousedown', (e) => {
+
     let clickAt = [...getMousePosition(canvas, e)]
     if (penUp) {
         console.log('start drawing at: ', clickAt);
@@ -20,61 +31,60 @@ canvas.addEventListener('mousedown', (e) => {
     else {
         console.log('end drawing at: ', clickAt);
         currentLine[1] = clickAt
-        linesArray.push([...currentLine])
+        if (penshape === 'rectangle') {
+
+            let topLeftX = Math.min(currentLine[0][0], currentLine[1][0])
+            let topLeftY = Math.min(currentLine[0][1], currentLine[1][1])
+            let bottomRightX = Math.max(currentLine[0][0], currentLine[1][0])
+            let bottomRightY = Math.max(currentLine[0][1], currentLine[1][1])
+            currentLine = [[topLeftX, topLeftY], [bottomRightX, bottomRightY]]
+        }
+        let newDrawObj = {
+            shape: penshape, arr: [currentLine[0], currentLine[1]],
+            stroke: parseInt(strokeWidth), color: color
+        }
+
+        drawings.push({ ...newDrawObj })
         penUp = true
 
     }
-    draw()
+    draw(ctx, canvas, drawings)
 })
 
 
-function draw() {
-    
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.beginPath();
-    ctx.rect(20, 40, 50, 50);
-    ctx.fillStyle = "#FF0000";
-    ctx.fill();
-    ctx.closePath();
-
-    ctx.beginPath();
-    ctx.arc(240, 160, 20, 0, Math.PI * 2, false);
-    ctx.fillStyle = "green";
-    ctx.fill();
-    ctx.closePath();
-
-    ctx.beginPath();
-    ctx.rect(160, 10, 100, 40);
-    ctx.strokeStyle = "rgba(0, 0, 255, 0.5)";
-    ctx.stroke();
-    ctx.closePath();
-    console.log(linesArray);
-
-    linesArray.forEach(line => {
-        console.log(line[0], ' to ', line[1]);
-        ctx.beginPath();
-        ctx.strokeStyle = "rgba(255, 0, 255, 1)";
-        ctx.moveTo(line[0][0], line[0][1]);
-        ctx.lineTo(line[1][0], line[1][1]);
-        ctx.stroke();
-        ctx.closePath();
 
 
-        ctx.beginPath();
-        setTimeout(()=>{console.log('wait')}, 000)
-    })
+async function setup() {
+    console.log('start');
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const gameId = urlParams.get('gameId')
+    console.log(gameId);
+    let gameDataFromDb = await getGameData(gameId)
+    drawings = [...gameDataFromDb.drawings]
+    document.getElementById('chosenWordDiv').innerText = gameDataFromDb.chosenWord
+    draw(ctx, canvas, drawings)
+}
+async function exportClicked(gameId = 2) {
+    console.log('export', drawings);
+    await postDrawingArr(gameId, drawings)
 
 }
 
-let penUp = true
-let linesArray = [
-    [[10, 200], [150, 220]],
-    [[50, 100], [50, 120]],
-]
-let currentLine = [[], []]
-function setup() {
-
-    draw()
+async function importClicked(gameId = 2) {
+    let temp = await getGameData(gameId)
+    console.log('temp:', temp);
+    drawings = temp.drawings
+    draw(ctx, canvas, drawings)
 }
+function updateOptions() {
+    shapeFromInput = document.getElementById('shapeInput').value
+    strokeWidthFromInput = document.getElementById('strokeWidthInput').value
+    colorFromInput = document.getElementById('colorInput').value
 
+    penshape = shapeFromInput
+    strokeWidth = Math.max(strokeWidthFromInput, 1)
+    color = colorFromInput
+    console.log('Current options:', penshape, strokeWidth, color);
+}
 setup()

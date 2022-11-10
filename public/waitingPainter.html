@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <script src="server_methods/getRequests.js" defer></script>
+    <script src="server_methods/postRequests.js" defer></script>
+    <script src="guess.js" defer></script> -->
+    <link rel="stylesheet" type="text/css" href="global.css">
+
+    <title>Canvas Game - waiting Painter</title>
+    <script>
+        console.log('try again');
+        //tries to log in every 2 seconds
+        setInterval(() => {
+            {
+                console.log('try again');
+
+                goToGame('game')
+
+            }
+        }, 2000)
+
+        async function goToGame(destination, gameId = null, key = null) {
+            let url = window.location.origin
+            if (destination === 'game') {
+                let query = window.location.href.substring(window.location.href.indexOf('?') + 8);
+                let gameId = query.split('&')[0]
+                let key = query.split('&')[1]
+                console.log(gameId, key);
+                url += '/game/connectToGame/' + gameId
+                    + '/' + key
+                let response = await fetch(url)
+                let logInMessage = await response.json()
+                console.log('logInMessage:', logInMessage);
+                if (logInMessage.message === 'success' && 'key' in logInMessage) {
+                    // let gameUrl = window.location.origin + '/gameId'+gameId+'/'+ logInMessage.key
+                    let gameUrl = window.location.origin + '/painter?gameId=' + gameId + '&' + logInMessage.key
+                    console.log('go to game at ', gameUrl);
+                    window.location.href = gameUrl
+                }
+
+            }
+
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Waiting painter</h1>
+</body>
+
+</html>

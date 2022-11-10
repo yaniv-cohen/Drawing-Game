@@ -1,13 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canvas Game</title>
+    <script src="server_methods/postRequests.js" defer></script>
+    <script src="server_methods/getRequests.js" defer></script>
+    <script src="utilities/drawFunction.js" defer></script>
     <script src="index.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="global.css">
+    <title>Canvas Game</title>
+
 </head>
+
 <body>
-    <canvas  style="border: 2px solid black" id="myCanvas" width="480" height="320"></canvas>
+    <h1>Painter, your word is - </h1>
+    <div id="chosenWordDiv">
+
+    </div>
+    <canvas id="myCanvas" width="400" height="320"></canvas>
+    <div>
+        <label>
+            <select id="shapeInput" name="cars" id="cars">
+                <option value="line">
+                    Line<span></span>
+                </option>
+                <option value="rectangle">Rectangle</option>
+                <option value="circle">Circle</option>
+            </select>
+        </label>
+        <label>
+            Stroke Width:
+            <input id="strokeWidthInput" type="number" placeholder="Stroke Width"></input>
+        </label>
+        <label>
+            Color:
+            <input id="colorInput" type="color" value="#ff0000"></input>
+        </label>
+        <button onclick="updateOptions()">Update Options</button>
+    </div>
+    <button onclick="importClicked()">Import</button>
+    <button onclick="exportClicked()">Export</button>
 </body>
+
 </html>
